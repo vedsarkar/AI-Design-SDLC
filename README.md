@@ -1,4 +1,4 @@
-# PRD: Agentic Design Pipeline for Reltio Forge
+# Agentic Design Pipeline for Reltio Forge
 **Status:** Draft v1.0
 **Owner:** Ved Sarkar
 **Date:** 2026-04-28
