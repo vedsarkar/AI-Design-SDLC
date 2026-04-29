@@ -1,3 +1,6 @@
+# Private AI instructions
+AI_INSTRUCTIONS.md
+
 # Environment & secrets
 dotenv.env
 .env
