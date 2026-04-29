@@ -107,13 +107,15 @@ Claude Desktop loads skills from `~/Library/Application Support/Claude/skills/` 
 3. Copy the skill files:
    ```bash
    # macOS
-   cp Skills/Forge-Design-Review/Claude-Desktop/Forge-Design-Review.md ~/Library/Application\ Support/Claude/skills/
+   cp Skills/Forge-Design-Review/Cursor/Forge-Design-Review.md ~/Library/Application\ Support/Claude/skills/
    cp Skills/Forge-Prototype-Builder/forge-prototype-builder.md ~/Library/Application\ Support/Claude/skills/
 
    # Windows (PowerShell)
-   Copy-Item "Skills\Forge-Design-Review\Claude-Desktop\Forge-Design-Review.md" "$env:APPDATA\Claude\skills\"
+   Copy-Item "Skills\Forge-Design-Review\Cursor\Forge-Design-Review.md" "$env:APPDATA\Claude\skills\"
    Copy-Item "Skills\Forge-Prototype-Builder\forge-prototype-builder.md" "$env:APPDATA\Claude\skills\"
    ```
+
+   > The skill files use the same format for Cursor and Claude Desktop, so the Cursor version works on both platforms.
 
 4. Restart Claude Desktop so it picks up the new skills.
 
@@ -180,15 +182,12 @@ Then re-copy the files if you used the global install path (Option B for Cursor,
 ```
 AI-Design-SDLC/
 ├── .claude/commands/
-│   ├── forge-design-review.md          # Cursor slash command
-│   └── forge-prototype-builder.md      # Cursor slash command
+│   ├── forge-design-review.md            # Cursor slash command
+│   └── forge-prototype-builder.md        # Cursor slash command
 └── Skills/
     ├── Forge-Design-Review/
-    │   ├── Claude-Desktop/
-    │   │   └── Forge-Design-Review.md  # Claude Desktop skill file
-    │   ├── Cursor/
-    │   │   └── Forge-Design-Review.md  # (mirror of .claude/commands/ — for reference)
-    │   └── BRIEF.md                    # Skill purpose and design notes
+    │   └── Cursor/
+    │       └── Forge-Design-Review.md    # Skill file (works on Cursor + Claude Desktop)
     └── Forge-Prototype-Builder/
-        └── forge-prototype-builder.md  # Skill file (works in both clients)
+        └── forge-prototype-builder.md    # Skill file (works on Cursor + Claude Desktop)
 ```
