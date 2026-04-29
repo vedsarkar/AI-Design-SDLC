@@ -1,0 +1,20 @@
+# Environment & secrets
+dotenv.env
+.env
+*.env
+.env.*
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Editor
+.cursor/
+.vscode/
+*.swp
+*.swo
