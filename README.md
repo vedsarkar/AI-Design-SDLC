@@ -1,7 +1,7 @@
 # Reltio Forge — AI Design Pipeline for Claude Desktop
 
-> Three Claude skills that replace the manual Reltio design process end-to-end:  
-> challenge assumptions → build concepts → review against the live data model.
+> Four Claude skills that replace the manual Reltio design process end-to-end:  
+> challenge assumptions → build concepts → review against the live data model → audit for accessibility.
 
 ---
 
@@ -70,6 +70,25 @@ Runs after a design is produced. Reviews Figma screens against Reltio's live dat
 
 ---
 
+### `/forge-accessibility-check` — WCAG 2.1 AA audit before dev handoff
+
+Runs after a design is built. Audits Figma screens against WCAG 2.1 AA — contrast, keyboard navigation, focus order, screen reader semantics, touch targets, and ARIA coverage — with Reltio-specific checks layered on top (data tables, status badges, modal focus management, dense form labels). After the audit renders in chat, the designer picks how to deliver it: spreadsheet for dev handoff, or one-click Figma comments pinned to the canvas.
+
+| Capability | What it does |
+|---|---|
+| **Full WCAG 2.1 AA coverage** | Perceivable, Operable, Understandable, Robust — every criterion checked against the live Figma node tree |
+| **Exact contrast measurement** | Reads color tokens straight from Figma, computes contrast ratios with the sRGB formula, flags every failure against 4.5:1 (normal text), 3:1 (large text / UI components) |
+| **Keyboard navigation map** | Walks every interactive element and reports tab order, Enter/Space behavior, Escape handling, and arrow key support — gaps surface before dev starts |
+| **Screen reader simulation** | For each element, reports what a screen reader will announce and what's missing — dialog roles, aria-labelledby, aria-checked, aria-describedby |
+| **Reltio-specific lens** | Data table headers, severity badges, lifecycle state indicators, match confidence scores, dense form labels, left nav active state, modal focus traps — checked the way an MDM admin would actually use them |
+| **Severity labeling** | 🔴 Critical · 🟡 Major · 🟢 Minor — same triage model as `/forge-design-review` so issues can be prioritized side-by-side |
+| **Spreadsheet delivery** | Generates a 4-sheet XLSX on the Desktop: Findings (with empty Status column for dev), Color Contrast, Keyboard Navigation, Screen Reader — header row bold, severity color-coded, ready for Jira import |
+| **Figma comment delivery** | Same one-click `Add / Skip / Stop` flow as `/forge-design-review` — each finding posts as a Figma comment with title, WCAG criterion, description, and recommendation pinned to the offending node |
+
+**Output:** WCAG audit report in chat (findings, contrast measurements, keyboard map, screen reader notes, priority fixes) + a delivery prompt to export as a spreadsheet or post directly to Figma.
+
+---
+
 ## Skills in the SDLC
 
 | Pipeline Stage | Skill | What it contributes |
@@ -79,6 +98,7 @@ Runs after a design is produced. Reviews Figma screens against Reltio's live dat
 | Concept iteration | **Forge Prototype Builder** | Iterates HTML prototype from designer feedback; maintains component provenance |
 | Pre-stakeholder review | **Forge Design Review** | Reviews concepts against live schema, Jira requirements, and DS standards |
 | Design freeze → hi-fi | **Forge Design Review** | Final pre-dev pass: C/M/S annotations on hi-fi; schema gaps and missing states surfaced |
+| Pre-dev accessibility gate | **Forge Accessibility Check** | WCAG 2.1 AA audit with spreadsheet or Figma comment delivery — catches contrast, ARIA, and keyboard gaps before code is written |
 | Hi-fi → dev handoff | **Forge Design Review** | Component state check confirms what dev needs to build vs. what already exists |
 
 ---
@@ -147,6 +167,7 @@ After restart, run any of these in Claude Desktop:
 /forge-design-review review this screen https://figma.com/design/...
 /forge-design-researcher what do users think about the import flow
 /forge-prototype-builder build a prototype for the match review screen
+/forge-accessibility-check check WCAG on https://figma.com/design/...
 ```
 
 ---
@@ -157,7 +178,7 @@ After restart, run any of these in Claude Desktop:
 AI-Design-SDLC/
 ├── README.md                           # This file
 └── Forge/
-    ├── Forge.plugin                    # Claude Desktop plugin — install via UI (bundles all three skills)
+    ├── Forge.plugin                    # Claude Desktop plugin — install via UI (bundles all four skills)
     ├── install.sh                      # Automated installer — run this first
     └── setup/
         ├── figma-comment.sh            # Posts comments to Figma REST API
