@@ -15,49 +15,31 @@ A set of four Claude Code skills for Reltio designers. Each skill is distributed
 
 ## Installation
 
-For each skill:
+1. Open terminal and run:
+   ```bash
+   claude plugin install figma@claude-plugins-official
+   ```
 
-```bash
-# 1. Unzip the .skill file and copy SKILL.md into Claude Code's commands folder
-unzip -p forge-design-review.skill SKILL.md > ~/.claude/commands/forge-design-review.md
-unzip -p forge-accessibility-check.skill SKILL.md > ~/.claude/commands/forge-accessibility-check.md
-unzip -p forge-design-researcher.skill SKILL.md > ~/.claude/commands/forge-design-researcher.md
-unzip -p forge-prototype-builder.skill SKILL.md > ~/.claude/commands/forge-prototype-builder.md
-```
+2. Open Claude in the terminal:
+   ```bash
+   claude
+   ```
 
-Or tell Claude Code to install them:
+3. Type `/mcp` and hit Enter.
 
-> *"Install the Forge skills from this folder."*
+4. Scroll to `plugin:figma:figma` → Enter → **Authenticate** and follow the browser prompt.
 
----
+5. Generate a Figma access token: **Figma → Settings → Security → Personal access tokens** (enable the `File comments: write` scope).
 
-## One-time setup — Figma token
-
-`/forge-design-review` and `/forge-accessibility-check` post comments directly to Figma. Add your Figma personal access token to `~/.claude/settings.json`:
-
-```json
-{
-  "env": {
-    "FIGMA_ACCESS_TOKEN": "figd_your_token_here"
-  },
-  "permissions": {
-    "allow": [
-      "Bash(~/.claude/scripts/figma-post.sh)",
-      "Write(/tmp/.claude-figma-comment)"
-    ]
-  }
-}
-```
-
-Get a token at **Figma → Settings → Security → Personal access tokens**. Enable the `File comments: write` scope.
-
-Also place `figma-post.sh` from the `setup/` folder into `~/.claude/scripts/`:
-
-```bash
-mkdir -p ~/.claude/scripts
-cp setup/figma-post.sh ~/.claude/scripts/
-chmod +x ~/.claude/scripts/figma-post.sh
-```
+6. Add the token to `~/.claude/settings.json`:
+   ```json
+   {
+     "env": {
+       "FIGMA_ACCESS_TOKEN": "figd_your_token_here"
+     }
+   }
+   ```
+   Or just paste it into Claude when asked — Claude will prompt on first use if the token isn't set.
 
 ---
 
