@@ -15,6 +15,8 @@ A set of four Claude Code skills for Reltio designers. Each skill is distributed
 
 ## Installation
 
+After loading the skills in Claude Code and/or Cursor. You'll need to do a manual authentication. Follow the below steps. 
+
 1. Open terminal and run:
    ```bash
    claude plugin install figma@claude-plugins-official
